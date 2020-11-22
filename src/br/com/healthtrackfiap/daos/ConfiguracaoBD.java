@@ -123,14 +123,8 @@ public class ConfiguracaoBD {
 				+ "   t_food(t_user_id_user, calories, description, created_at) \n" + "VALUES\n" + "   (\n"
 				+ "      4, 1000, 'Feijoada de Domingo', '2020-09-19'\n" + "   )\n" + ";\n" + "INSERT INTO\n"
 				+ "   t_food(t_user_id_user, calories, description, created_at) \n" + "VALUES\n" + "   (\n"
-				+ "      4, 90, 'Salada De Fruta', '2020-10-19'\n" + "   )\n" 
-				+ "INSERT INTO\n"
-				+ "   t_login(login, password, t_user_id_user) \n"
-				+ "VALUES\n"
-				+ "   (\n"
-				+ "      'haha@tutu', '123456', 4\n"
-				+ "   )\n"
-				+ ";";
+				+ "      4, 90, 'Salada De Fruta', '2020-10-19'\n" + "   );\n"
+				+ "INSERT INTO t_login(login, password, t_user_id_user) VALUES ('haha@tutu', '123456', 4);";
 
 		try {
 			execute(script);
