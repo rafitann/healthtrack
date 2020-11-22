@@ -25,10 +25,12 @@ public class WeightHeightDAO {
 
 		List<WeightHeight> listInfo = new ArrayList<WeightHeight>();
 
+		Connection connection = null;
+
 		try {
 			Class.forName(ConfiguracaoBD.DRIVER);
-			Connection con = DriverManager.getConnection(ConfiguracaoBD.connectionUrl);
-			Statement stmt = con.createStatement();
+			connection = DriverManager.getConnection(ConfiguracaoBD.connectionUrl);
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(GET_ALL);
 
 			WeightHeight imc = new WeightHeight();
@@ -38,7 +40,7 @@ public class WeightHeightDAO {
 				imc.setHeight(rs.getDouble("height"));
 				imc.setWeight(rs.getDouble("weight"));
 				imc.setCreatedAt(FormatadorData.parseDate(rs.getString("created_at")));
-				
+
 				listInfo.add(imc);
 
 			}
@@ -46,6 +48,13 @@ public class WeightHeightDAO {
 		// Handle any errors that may have occurred.
 		catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					connection.close(); // <-- This is important
+				} catch (SQLException e) {
+				}
+			}
 		}
 
 		return listInfo;
@@ -66,7 +75,7 @@ public class WeightHeightDAO {
 			stmt.setInt(1, 1);
 			stmt.setDouble(2, weightHeight.getHeight());
 			stmt.setDouble(3, weightHeight.getWeight());
-			//stmt.setDate(4, weightHeight.getCreatedAt());
+			// stmt.setDate(4, weightHeight.getCreatedAt());
 			stmt.execute();
 
 			sucesso = true;

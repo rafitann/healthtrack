@@ -53,7 +53,7 @@ public class ServletFilter implements Filter {
 		boolean authorize = false;
 		
 		String path = req.getServletPath();
-		if (path.startsWith("/css") || path.startsWith("/assets")) {
+		if (path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/assets")) {
 			authorize = true;
 			
 		} else if (user == null) {

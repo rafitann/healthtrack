@@ -14,6 +14,9 @@ public class WeightHeightBean {
 	private String bmiClassification;
 	private String createdAt;
 
+	public WeightHeightBean() {
+	}
+
 	public WeightHeightBean(String idImc, double height, double weight, Date createdAt) {
 		setId(idImc);
 		try {

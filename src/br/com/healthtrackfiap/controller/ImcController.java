@@ -1,5 +1,6 @@
 package br.com.healthtrackfiap.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,16 @@ import br.com.healthtrackfiap.utils.FormatadorNumero;
 
 public class ImcController {
 
+	private WeightHeightDAO dao;
+
+	public ImcController() {
+		dao = new WeightHeightDAO();
+	}
+
 	public List<WeightHeightBean> getAll() {
 		List<WeightHeightBean> bean = new ArrayList<WeightHeightBean>();
 
-		List<WeightHeight> imcs = new WeightHeightDAO().getAll();
+		List<WeightHeight> imcs = dao.getAll();
 
 		for (WeightHeight imc : imcs) {
 			WeightHeightBean b = new WeightHeightBean(imc.getIdImc(), imc.getHeight(), imc.getWeight(),
@@ -47,5 +54,21 @@ public class ImcController {
 		}
 
 		return bean;
+	}
+
+	public boolean saveOrUpdate(WeightHeightBean bean) {
+
+		WeightHeight wh = new WeightHeight();
+
+		wh.setHeight(Double.parseDouble(bean.getHeight()));
+		wh.setWeight(Double.parseDouble(bean.getWeight()));
+
+		try {
+			dao.insertWeightHeight(wh);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

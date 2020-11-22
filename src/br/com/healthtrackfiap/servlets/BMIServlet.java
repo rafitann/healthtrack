@@ -16,35 +16,45 @@ import br.com.healthtrackfiap.controller.bean.WeightHeightBean;
 /**
  * Servlet implementation class BMIServlet
  */
-@WebServlet({"/ImcServlet", "/imc"})
+@WebServlet({ "/ImcServlet", "/imc" })
 public class BMIServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BMIServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<WeightHeightBean> imcs = new ImcController().getAll();	
-		request.setAttribute("imcs", imcs);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("imc.jsp");
-        rd.forward(request, response);
+	public BMIServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		List<WeightHeightBean> imcs = new ImcController().getAll();
+		request.setAttribute("imcs", imcs);
+
+		RequestDispatcher rd = request.getRequestDispatcher("imc.jsp");
+		rd.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ImcController controller = new ImcController();
+
+		WeightHeightBean bean = new WeightHeightBean();
+		bean.setHeight(request.getParameter("height"));
+		bean.setWeight(request.getParameter("weight"));
+
+		controller.saveOrUpdate(bean);
 		doGet(request, response);
 	}
 

@@ -1,17 +1,10 @@
-<%@page import="br.com.healthtrackfiap.controller.bean.WeightHeightBean"%>
-<%@page import="br.com.healthtrackfiap.utils.FormatadorNumero"%>
-<%@page import="br.com.healthtrackfiap.utils.FormatadorData"%>
-<%@page import="java.util.Date"%>
-<%@page import="br.com.healthtrackfiap.models.WeightHeight"%>
-<%@page import="java.util.List"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>BMI · Health Track</title>
+<title>Health Track</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
@@ -33,7 +26,7 @@
 			placeholder="Search" aria-label="Search" />
 		<ul class="navbar-nav px-3">
 			<li class="nav-item text-nowrap"><a class="nav-link"
-				href="../signin/index.html">Sign out</a></li>
+				data-toggle="modal" data-target="#logout_modal">Sign out</a></li>
 		</ul>
 	</nav>
 
@@ -81,8 +74,8 @@
 										fill="inherit" stroke="none" />
                   </svg> User
 						</a></li>
-						<li class="nav-item"><a class="nav-link active" href="imc">
-								<svg height="20" viewBox="0 0 45 45" fill="currentColor"
+						<li class="nav-item"><a class="nav-link" href="imc"> <svg
+									height="20" viewBox="0 0 45 45" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
                     <path
 										d="M41.25 0H3.75003C1.67994 0.00246094 0.00246094 1.67994 0 3.75003V41.2501C0.00246094 43.3201 1.67994 44.9975 3.75003 45H41.2501C43.3201 44.9975 44.9976 43.3201 45.0001 41.25V3.75003C44.9975 1.67994 43.3201 0.00246094 41.25 0ZM43.5 41.25C43.4987 42.492 42.492 43.4987 41.25 43.5H3.75003C2.50796 43.4987 1.50135 42.492 1.50003 41.25V3.75003C1.50135 2.50796 2.50796 1.50135 3.75003 1.50003H41.2501C42.4921 1.50135 43.4987 2.50796 43.5001 3.75003V41.25H43.5Z"
@@ -108,80 +101,72 @@
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">BMI</h1>
-					<div class="btn-toolbar mb-2 mb-md-0">
-						<div class="btn-group mr-3">
-							<button type="button" class="btn btn-sm btn-outline-secondary">
-								Share</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary">
-								Export</button>
-							<button type="button" data-toggle="modal" data-target="#addModal"
-								class="btn btn-sm btn-outline-secondary">Add</button>
-						</div>
-					</div>
+					<h1 class="h2">Welcome to Health Track</h1>
+					<div class="btn-toolbar mb-2 mb-md-0"></div>
 				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Id</th>
-							<th scope="col">Date</th>
-							<th scope="col">Height (m)</th>
-							<th scope="col">Weight (kg)</th>
-							<th scope="col">BMI</th>
-						</tr>
-					</thead>
-					<tbody>
-						<%
-							List<WeightHeightBean> imcs = (List<WeightHeightBean>) request.getAttribute("imcs");
-						for (WeightHeightBean imc : imcs) {
-						%>
-						<tr>
-							<td scope="row"><%=imc.getId()%></td>
-							<td><%=imc.getCreatedAt()%></td>
-							<td><%=imc.getHeight()%></td>
-							<td><%=imc.getWeight()%></td>
-							<td><%=imc.getBmiClassification()%> - <%=imc.getBmi()%></td>
-						</tr>
-						<%
-							}
-						%>
-					</tbody>
-				</table>
 			</main>
+
 			<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
 				aria-labelledby="addModal" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">BMI</h5>
+							<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<form id="form1" class="needs-validation form-signin"
-								method="post" action="imc" novalidate>
+							<form class="needs-validation form-signin" novalidate>
 								<div class="mb-2">
 									<label for="input-height">Height</label> <input type="text"
-										class="form-control" name="height" id="input-height" required />
+										class="form-control" name="user" id="input-height" required />
 									<div class="invalid-feedback">Height required</div>
 								</div>
 								<div class="mb-2">
 									<label for="input-weight">Weight</label> <input type="text"
-										class="form-control" name="weight" id="input-weight" required />
+										class="form-control" name="user" id="input-weight" required />
 									<div class="invalid-feedback">Weight required</div>
 								</div>
 								<div class="modal-footer">
-									<button data-dismiss="modal" type="submit"
-										onclick="document.getElementById('form1').submit();"
-										class="btn">Save</button>
+									<button data-dismiss="modal" type="submit" class="btn">
+										Save</button>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="modal fade" id="logout_modal" tabindex="-1" role="dialog"
+				aria-labelledby="logout_modal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Health Track</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Deseja realmente sair da aplicação?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cancelar</button>
+							<form id="form1" action="login" method="delete" novalidate>
+								<button data-dismiss="modal" type="submit"
+									class="btn btn-primary"
+									onclick="document.getElementById('form1').submit();">Sair</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 	<script
