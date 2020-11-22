@@ -34,6 +34,7 @@ public class LoginDAO {
 				
 				if (rs.next()) {
 					usr = new User();
+					usr.setUserID(rs.getString("id_user"));
 					usr.setName(rs.getString("first_name"));
 				}
 				

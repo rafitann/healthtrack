@@ -53,11 +53,11 @@ public class LoginServlet extends HttpServlet {
 		RequestDispatcher rd = null;
 
 		if (u != null) {
-
-			Cookie cookie = new Cookie("auth", "123");
+			Cookie cookie = new Cookie("auth", u.getUserID());
 			response.addCookie(cookie);
+			request.getSession().setAttribute("user", u);
 
-			rd = request.getRequestDispatcher("imc");
+			rd = request.getRequestDispatcher("/");
 		} else
 			rd = request.getRequestDispatcher("login.jsp");
 

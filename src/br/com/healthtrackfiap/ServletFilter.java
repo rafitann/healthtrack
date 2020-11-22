@@ -14,8 +14,10 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.com.healthtrackfiap.daos.ConfiguracaoBD;
+import br.com.healthtrackfiap.models.User;
 
 /**
  * Servlet Filter implementation class ServletFilter
@@ -44,18 +46,35 @@ public class ServletFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		Cookie[] cookies = req.getCookies();
+		HttpSession session = req.getSession();
+		System.out.println(session.getAttribute("user"));
+		User user = (User) session.getAttribute("user");
 
-		boolean authorize = true;
-
-//		if (cookies != null) {
-//			for (Cookie cookie : cookies) {
-//				if (cookie.getName().equals("auth")) {
-//					authorize = true;
-//					break;
-//				}
-//			}
-//		}
+		boolean authorize = false;
+		
+		String path = req.getServletPath();
+		if (path.startsWith("/css") || path.startsWith("/assets")) {
+			authorize = true;
+			
+		} else if (user == null) {
+			if (!path.equalsIgnoreCase("/login")) {
+				authorize = false;	
+			} else if (path.equalsIgnoreCase("/login")) {
+				authorize = true;	
+			}
+			
+		} else {
+			Cookie[] cookies = req.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("auth")) {
+						authorize = user.getUserID().equals(cookie.getValue());
+						break;
+					}
+				}
+			} else
+				authorize = false;
+		}
 
 		if (authorize)
 			chain.doFilter(request, response);
