@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.healthtrackfiap.controller.ImcController;
 import br.com.healthtrackfiap.controller.bean.WeightHeightBean;
+import br.com.healthtrackfiap.models.WeightHeight;
 
 /**
  * Servlet implementation class BMIServlet
@@ -35,7 +36,7 @@ public class BMIServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List<WeightHeightBean> imcs = new ImcController().getAll();
+		List<WeightHeight> imcs = new ImcController().getAll();
 		request.setAttribute("imcs", imcs);
 
 		RequestDispatcher rd = request.getRequestDispatcher("imc.jsp");
@@ -50,11 +51,15 @@ public class BMIServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ImcController controller = new ImcController();
 
-		WeightHeightBean bean = new WeightHeightBean();
-		bean.setHeight(request.getParameter("height"));
-		bean.setWeight(request.getParameter("weight"));
+//		WeightHeightBean bean = new WeightHeightBean();
+//		bean.setHeight(request.getParameter("height"));
+//		bean.setWeight(request.getParameter("weight"));
 
-		controller.saveOrUpdate(bean);
+		WeightHeight wh = new WeightHeight();
+		wh.setHeight(Double.parseDouble(request.getParameter("height")));
+		wh.setWeight(Double.parseDouble(request.getParameter("weight")));
+
+		controller.saveOrUpdate(wh);
 		doGet(request, response);
 	}
 

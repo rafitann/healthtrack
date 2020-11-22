@@ -1,4 +1,3 @@
-<%@page import="br.com.healthtrackfiap.controller.bean.WeightHeightBean"%>
 <%@page import="br.com.healthtrackfiap.utils.FormatadorNumero"%>
 <%@page import="br.com.healthtrackfiap.utils.FormatadorData"%>
 <%@page import="java.util.Date"%>
@@ -132,15 +131,33 @@
 					</thead>
 					<tbody>
 						<%
-							List<WeightHeightBean> imcs = (List<WeightHeightBean>) request.getAttribute("imcs");
-						for (WeightHeightBean imc : imcs) {
+							List<WeightHeight> imcs = (List<WeightHeight>) request.getAttribute("imcs");
+						for (WeightHeight imc : imcs) {
 						%>
 						<tr>
-							<td scope="row"><%=imc.getId()%></td>
-							<td><%=imc.getCreatedAt()%></td>
-							<td><%=imc.getHeight()%></td>
-							<td><%=imc.getWeight()%></td>
-							<td><%=imc.getBmiClassification()%> - <%=imc.getBmi()%></td>
+							<td scope="row"><%=imc.getIdImc()%></td>
+							<td><%=FormatadorData.toDate(imc.getCreatedAt())%></td>
+							<td><%=FormatadorNumero.toNumber(imc.getHeight(), 2)%></td>
+							<td><%=FormatadorNumero.toNumber(imc.getWeight(), 2)%></td>
+
+							<%
+								double ind = imc.getWeight() / (imc.getHeight() * imc.getHeight());
+							String classif = "";
+							if (ind < 18.5)
+								classif = "Abaixo do Peso";
+							else if (ind >= 18.5 && ind < 24.9)
+								classif = "Normal";
+							else if (ind >= 24.9 && ind < 29.9)
+								classif = "Sobrepeso";
+							else if (ind >= 29.9 && ind < 34.9)
+								classif = "Obesidade Grau 1";
+							else if (ind >= 34.9 && ind < 39.9)
+								classif = "Obesidade Grau 2";
+							else
+								classif = "Obesidade Grau 3";
+							%>
+
+							<td><%=classif%> - <%=FormatadorNumero.toNumber(ind, 2)%></td>
 						</tr>
 						<%
 							}

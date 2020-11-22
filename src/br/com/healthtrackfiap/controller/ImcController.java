@@ -18,50 +18,49 @@ public class ImcController {
 		dao = new WeightHeightDAO();
 	}
 
-	public List<WeightHeightBean> getAll() {
-		List<WeightHeightBean> bean = new ArrayList<WeightHeightBean>();
+	public List<WeightHeight> getAll() {
+//		List<WeightHeightBean> bean = new ArrayList<WeightHeightBean>();
+//		List<WeightHeight> imcs = new ArrayList<WeightHeight>();
+//
+//		for (WeightHeight imc : imcs) {
+//			WeightHeightBean b = new WeightHeightBean(imc.getIdImc(), imc.getHeight(), imc.getWeight(),
+//					imc.getCreatedAt());
+//
+//			try {
+//
+//				double ind = imc.getWeight() / (imc.getHeight() * imc.getHeight());
+//
+//				b.setBmi(FormatadorNumero.toNumber(ind, 2));
+//
+//				if (ind < 18.5)
+//					b.setBmiClassification("Abaixo do Peso");
+//				else if (ind >= 18.5 && ind < 24.9)
+//					b.setBmiClassification("Normal");
+//				else if (ind >= 24.9 && ind < 29.9)
+//					b.setBmiClassification("Sobrepeso");
+//				else if (ind >= 29.9 && ind < 34.9)
+//					b.setBmiClassification("Obesidade Grau 1");
+//				else if (ind >= 34.9 && ind < 39.9)
+//					b.setBmiClassification("Obesidade Grau 2");
+//				else
+//					b.setBmiClassification("Obesidade Grau 3");
+//
+//			} catch (DataIncorretaException e) {
+//				e.printStackTrace();
+//			}
+//
+//			bean.add(b);
+//		}
 
-		List<WeightHeight> imcs = dao.getAll();
-
-		for (WeightHeight imc : imcs) {
-			WeightHeightBean b = new WeightHeightBean(imc.getIdImc(), imc.getHeight(), imc.getWeight(),
-					imc.getCreatedAt());
-
-			try {
-
-				double ind = imc.getWeight() / (imc.getHeight() * imc.getHeight());
-
-				b.setBmi(FormatadorNumero.toNumber(ind, 2));
-
-				if (ind < 18.5)
-					b.setBmiClassification("Abaixo do Peso");
-				else if (ind >= 18.5 && ind < 24.9)
-					b.setBmiClassification("Normal");
-				else if (ind >= 24.9 && ind < 29.9)
-					b.setBmiClassification("Sobrepeso");
-				else if (ind >= 29.9 && ind < 34.9)
-					b.setBmiClassification("Obesidade Grau 1");
-				else if (ind >= 34.9 && ind < 39.9)
-					b.setBmiClassification("Obesidade Grau 2");
-				else
-					b.setBmiClassification("Obesidade Grau 3");
-
-			} catch (DataIncorretaException e) {
-				e.printStackTrace();
-			}
-
-			bean.add(b);
-		}
-
-		return bean;
+		return dao.getAll();
 	}
 
-	public boolean saveOrUpdate(WeightHeightBean bean) {
+	public boolean saveOrUpdate(WeightHeight wh) {
 
-		WeightHeight wh = new WeightHeight();
-
-		wh.setHeight(Double.parseDouble(bean.getHeight()));
-		wh.setWeight(Double.parseDouble(bean.getWeight()));
+//		WeightHeight wh = new WeightHeight();
+//
+//		wh.setHeight(Double.parseDouble(bean.getHeight()));
+//		wh.setWeight(Double.parseDouble(bean.getWeight()));
 
 		try {
 			dao.insertWeightHeight(wh);
