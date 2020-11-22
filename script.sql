@@ -246,3 +246,10 @@ VALUES
       4, 90, 'Salada De Fruta', '2020-10-19'
    )
 ;
+INSERT INTO
+   t_login(login, password, t_user_id_user) 
+VALUES
+   (
+      4, 'haha@tutu', '123456', 4
+   )
+;

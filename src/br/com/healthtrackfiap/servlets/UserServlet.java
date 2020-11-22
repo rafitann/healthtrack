@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-        RequestDispatcher rd = request.getRequestDispatcher("User.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("user.jsp");
         rd.forward(request, response);
 	}
 
